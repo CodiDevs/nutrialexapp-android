@@ -31,7 +31,8 @@ data class FraseIncompleta(
     val fraseAntes: String,
     val fraseDespues: String,
     val respuesta: String,
-    val opciones: List<String>
+    val opciones: List<String>,
+    val curiosidad: String = ""
 )
 
 @Composable
@@ -142,14 +143,25 @@ fun CompletaFraseScreen(
                     border = BorderStroke(2.dp, if (esCorrecto) Leaf else Berry),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (esCorrecto) "✅ ¡Excelente! +10 puntos" else "❌ La respuesta era: \"${frase.respuesta}\"",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = if (esCorrecto) LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (esCorrecto) "✅ ¡Excelente! +10 puntos" else "❌ La respuesta era: \"${frase.respuesta}\"",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = if (esCorrecto) LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (esCorrecto && frase.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = frase.curiosidad,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(16.dp))
 

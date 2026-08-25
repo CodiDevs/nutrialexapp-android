@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.codidevs.nutriapp.data.models.ParMemoria
 import com.codidevs.nutriapp.ui.components.BarraProgresoActividad
 import com.codidevs.nutriapp.ui.components.DecoracionFondoActividad
 import com.codidevs.nutriapp.ui.components.ScreenHeader
@@ -24,11 +25,6 @@ import com.codidevs.nutriapp.ui.theme.*
 
 private data class CartaMemoria(
     val id: Int,
-    val emoji: String,
-    val texto: String
-)
-
-data class ParMemoria(
     val emoji: String,
     val texto: String
 )
@@ -68,7 +64,8 @@ fun MemoriaNutritivaScreen(
                 parejasEncontradas++
                 seleccionadas = emptyList()
                 volteadas = volteadas + a + b
-                mensajeFeedback = "✅ ¡Pareja encontrada! +10 puntos"
+                val par = pares[a / 2]
+                mensajeFeedback = if (par.curiosidad.isNotEmpty()) par.curiosidad else "✅ ¡Pareja encontrada! +10 puntos"
                 bloqueado = false
             } else {
                 seleccionadas = nueva

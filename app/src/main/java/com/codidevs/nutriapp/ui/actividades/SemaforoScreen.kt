@@ -18,16 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.codidevs.nutriapp.data.models.AlimentoSemaforo
 import com.codidevs.nutriapp.ui.components.BarraProgresoActividad
 import com.codidevs.nutriapp.ui.components.DecoracionFondoActividad
 import com.codidevs.nutriapp.ui.components.ScreenHeader
 import com.codidevs.nutriapp.ui.components.pulsoAnimado
 import com.codidevs.nutriapp.ui.theme.*
-
-data class AlimentoSemaforo(
-    val emoji: String,
-    val nombre: String
-)
 
 data class SemaforoDatos(
     val verde: List<AlimentoSemaforo>,
@@ -129,17 +125,28 @@ fun SemaforoScreen(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (esCorrecto)
-                            "✅ ¡Correcto! +10 puntos"
-                        else
-                            "❌ ${actual.alimento.nombre} es para ${textoCategoria(actual.categoria)}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (esCorrecto) LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (esCorrecto)
+                                "✅ ¡Correcto! +10 puntos"
+                            else
+                                "❌ ${actual.alimento.nombre} es para ${textoCategoria(actual.categoria)}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (esCorrecto) LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (esCorrecto && actual.alimento.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = actual.alimento.curiosidad,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(16.dp))
 

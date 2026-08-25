@@ -7,7 +7,8 @@ import org.json.JSONObject
 data class ItemDato(
     val emoji: String,
     val texto: String,
-    val nombre: String = ""
+    val nombre: String = "",
+    val curiosidad: String = ""
 )
 
 /** Una actividad de un nivel (con su tipo y datos crudos). */

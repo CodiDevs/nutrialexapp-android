@@ -149,14 +149,25 @@ fun VerdaderoFalsoScreen(
                     border = BorderStroke(2.dp, if (esCorrecto) Leaf else Berry),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (esCorrecto) "✅ ¡Genial! +10 puntos" else "❌ La respuesta era ${if (pregunta.esVerdadero) "Verdadero" else "Falso"}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = if (esCorrecto) LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (esCorrecto) "✅ ¡Genial! +10 puntos" else "❌ La respuesta era ${if (pregunta.esVerdadero) "Verdadero" else "Falso"}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = if (esCorrecto) LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (esCorrecto && pregunta.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = pregunta.curiosidad,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(16.dp))
 

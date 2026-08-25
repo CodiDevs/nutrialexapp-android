@@ -101,14 +101,25 @@ fun MejorOpcionNivel2Screen(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (respuesta == true) "✅ ¡Correcto! +10 puntos" else "❌ La mejor opción era: ${pregunta.emojiCorrecta} ${pregunta.textoCorrecta}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (respuesta == true) LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (respuesta == true) "✅ ¡Correcto! +10 puntos" else "❌ La mejor opción era: ${pregunta.emojiCorrecta} ${pregunta.textoCorrecta}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (respuesta == true) LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (respuesta == true && pregunta.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = pregunta.curiosidad,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(16.dp))
 

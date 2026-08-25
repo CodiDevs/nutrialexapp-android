@@ -48,7 +48,8 @@ data class AlimentoRuleta(
     val emoji: String,
     val nombre: String,
     val aporte: String,
-    val opciones: List<String>
+    val opciones: List<String>,
+    val curiosidad: String = ""
 )
 
 private val COLORES_RULETA = listOf(
@@ -232,14 +233,25 @@ fun RuedaAlimentacionScreen(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (esCorrecto) "✅ ¡Súper! +10 puntos" else "❌ Aporta ${alimento.aporte}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (esCorrecto) LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(12.dp)
-                    )
+                    Column(modifier = Modifier.padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (esCorrecto) "✅ ¡Súper! +10 puntos" else "❌ Aporta ${alimento.aporte}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (esCorrecto) LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (esCorrecto && alimento.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = alimento.curiosidad,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(12.dp))
                 Button(

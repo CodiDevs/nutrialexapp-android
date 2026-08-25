@@ -205,17 +205,28 @@ fun UneImagenScreen(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (estado == "correcto")
-                            "✅ ¡Correcto! +10 puntos"
-                        else
-                            "❌ ${imagen.emoji} ${imagen.texto}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (estado == "correcto") LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (estado == "correcto")
+                                "✅ ¡Correcto! +10 puntos"
+                            else
+                                "❌ ${imagen.emoji} ${imagen.texto}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (estado == "correcto") LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (estado == "correcto" && imagen.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = imagen.curiosidad,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(14.dp))
 

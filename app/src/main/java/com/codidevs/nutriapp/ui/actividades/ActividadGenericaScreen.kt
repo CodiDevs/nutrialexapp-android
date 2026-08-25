@@ -1,7 +1,7 @@
 package com.codidevs.nutriapp.ui.actividades
 
 import androidx.compose.runtime.Composable
-import com.codidevs.nutriapp.data.models.MejorOpcionNivel2
+import com.codidevs.nutriapp.data.models.*
 
 /**
  * Pantalla genérica de actividad: recibe el nivel y la actividad (del JSON),
@@ -72,11 +72,15 @@ fun ActividadGenericaScreen(
         }
         "mejor_opcion", "situaciones" -> {
             val lista = datos as? List<MejorOpcionNivel2>
-            MejorOpcionNivel2Screen(
-                preguntas = lista ?: emptyList(),
-                onBack = onBack,
-                onTerminada = terminar
-            )
+            if (!lista.isNullOrEmpty()) {
+                MejorOpcionNivel2Screen(
+                    preguntas = lista,
+                    onBack = onBack,
+                    onTerminada = terminar
+                )
+            } else {
+                onBack()
+            }
         }
         "ruleta" -> {
             val lista = datos as? List<AlimentoRuleta>

@@ -25,7 +25,8 @@ import com.codidevs.nutriapp.ui.theme.*
 data class PreguntaQuiz(
     val pregunta: String,
     val correcta: String,
-    val incorrectas: List<String>
+    val incorrectas: List<String>,
+    val curiosidad: String = ""
 )
 
 /**
@@ -125,17 +126,25 @@ fun QuizScreen(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (esCorrecto)
-                            "✅ ¡Correcto! +10 puntos"
-                        else
-                            "❌ La respuesta correcta era: ${pregunta.correcta}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = if (esCorrecto) LeafDark else Berry,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (esCorrecto) "✅ ¡Correcto! +10 puntos" else "❌ La respuesta era: ${pregunta.correcta}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (esCorrecto) LeafDark else Berry,
+                            textAlign = TextAlign.Center
+                        )
+                        if (esCorrecto && pregunta.curiosidad.isNotEmpty()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = pregunta.curiosidad,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = InkSoft,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
                 Spacer(Modifier.height(16.dp))
 
