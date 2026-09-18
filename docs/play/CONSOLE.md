@@ -1,4 +1,4 @@
-# Play Console — NutriApp (CodiDevs)
+# Play Console — NutriApp
 
 App **para padres y madres**. El hijo (4–14) puede jugar junto a ellos. Offline. Paquete `com.codidevs.nutriapp`.
 
@@ -26,7 +26,7 @@ Juega con tu hijo hábitos de alimentación y movimiento. Para padres y madres.
 
 **Descripción completa:**
 
-NutriApp es un juego educativo de CodiDevs para padres y madres. Un sendero de niveles, minijuegos y recompensas para jugar juntos hábitos de alimentación y movimiento.
+NutriApp es un juego educativo para padres y madres. Un sendero de niveles, minijuegos y recompensas para jugar juntos hábitos de alimentación y movimiento.
 
 El padre o la madre registra el perfil del hijo (nombre, edad, peso y estatura). El indicador de IMC es orientativo.
 
@@ -34,7 +34,6 @@ NutriApp no es un dispositivo médico y no diagnostica, trata ni previene ningun
 
 Los datos se quedan en el teléfono. No hay anuncios, no hay cuenta en la nube y no hay Internet.
 
-Hecho por CodiDevs.
 
 **Categoría:** Educación o Salud y bienestar.
 

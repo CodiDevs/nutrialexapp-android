@@ -1,17 +1,806 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NutrialexApp — CodiDevs</title>
+  <title>NutriApp — Aprende a comer bien jugando</title>
+  <meta name="description" content="App educativa gratuita para niños de 6 a 12 años. Aprende sobre nutrición y hábitos saludables jugando. Descarga el APK gratis." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="NutriApp — Aprende a comer bien jugando" />
+  <meta property="og:description" content="App educativa gratuita para niños de 6 a 12 años." />
+  <meta property="og:image" content="play/assets/feature-graphic.png" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="../app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" />
+  <link rel="apple-touch-icon" href="../app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
-    body { font-family: Georgia, serif; background: #fffbf2; color: #22301f; max-width: 40rem; margin: 3rem auto; padding: 0 1.25rem; }
-    a { color: #2a8354; font-weight: 700; }
+    /* ── Variables ─────────────────────────────────────── */
+    :root {
+      --cream:      #FFFDF7;
+      --bg:         #F4F0E4;
+      --leaf:       #3DAA6D;
+      --leaf-dark:  #2A8354;
+      --leaf-light: #E2F5E9;
+      --mango:      #FF9F40;
+      --mango-dark: #E3852B;
+      --mango-lt:   #FFF1E0;
+      --berry:      #F2545B;
+      --sky:        #2FA8D6;
+      --ink:        #304737;
+      --ink-soft:   #52695A;
+      --line:       #D8E5D8;
+    }
+
+    /* ── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+      min-width: 0;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Baloo 2', sans-serif; }
+
+    /* ── NAV ───────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 max(1rem, calc((100vw - 1120px) / 2));
+      min-height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--leaf-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .nav-logo img { width: 34px; height: 34px; border-radius: 50%; flex: 0 0 auto; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--leaf-dark); }
+    .nav-cta {
+      background: var(--leaf);
+      color: #fff !important;
+      border-radius: 12px;
+      padding: 7px 16px;
+      font-weight: 800 !important;
+    }
+    .nav-cta:hover { background: var(--leaf-dark); color: #fff !important; }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: clamp(3rem, 8vw, 5rem) 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, #c8f0d9 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      background: var(--leaf-light);
+      border: 2px solid var(--leaf);
+      color: var(--leaf-dark);
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      max-width: 100%;
+      line-height: 1.35;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.15;
+      max-width: 700px;
+    }
+    .hero h1 span { color: var(--leaf-dark); }
+    .hero p {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--leaf);
+      color: #fff;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 28px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 5px 0 var(--leaf-dark);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-primary:active, .btn-primary:hover {
+      transform: translateY(2px);
+      box-shadow: 0 3px 0 var(--leaf-dark);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      color: var(--leaf-dark);
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--leaf); }
+
+    .hero-feature {
+      margin-top: 3rem;
+      width: 100%;
+      max-width: 860px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(34,48,31,.15);
+      border: 3px solid var(--line);
+    }
+    .hero-feature img { width: 100%; display: block; }
+
+    /* ── STATS ROW ─────────────────────────────────────── */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      padding: 3rem 1.5rem;
+    }
+    .stat-pill {
+      background: var(--cream);
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 28px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-pill .num {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--leaf-dark);
+    }
+    .stat-pill .lbl {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+
+    /* ── SECTION WRAPPER ──────────────────────────────── */
+    .section { padding: 4rem 1.5rem; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-tag {
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mango-dark);
+      margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: .75rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+      max-width: 560px;
+    }
+
+    /* ── FEATURES GRID ─────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 2.5rem;
+    }
+    .feat-card {
+      background: var(--cream);
+      border: 2px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .feat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(34,48,31,.1);
+    }
+    .feat-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .feat-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .feat-card p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* ── GAMES ─────────────────────────────────────────── */
+    .games-section { background: var(--cream); }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 2.5rem;
+    }
+    .game-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+    .game-chip .gi { font-size: 1.6rem; }
+    .game-chip .gn { display: flex; flex-direction: column; }
+    .game-chip .gn small { font-size: 0.75rem; color: var(--ink-soft); font-weight: 600; margin-top: 1px; }
+
+    /* ── MODULES ───────────────────────────────────────── */
+    .modules-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 2.5rem;
+    }
+    .mod-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--cream);
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+    }
+    .mod-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      background: var(--leaf);
+      color: #fff;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: .04em;
+      line-height: 1.1;
+      border-radius: 999px;
+      padding: 8px 11px;
+      box-shadow: inset 0 -2px 0 rgba(34, 48, 31, .14);
+    }
+    .mod-row:nth-child(even) .mod-num { background: var(--mango-dark); }
+    .mod-row h4 { color: var(--ink); font-size: 1.05rem; margin-bottom: 4px; }
+    .mod-row p { color: var(--ink-soft); font-size: .9rem; font-weight: 600; line-height: 1.5; }
+    .medal-chip span { font-size: 1.4rem; }
+
+    /* ── DOWNLOAD ──────────────────────────────────────── */
+    .download-section {
+      text-align: center;
+      padding: 5rem 1.5rem;
+      overflow-x: hidden;
+    }
+    .download-card {
+      background: var(--cream);
+      border: 2px solid var(--line);
+      border-radius: 28px;
+      padding: 3rem 2rem;
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      box-shadow: 0 16px 48px rgba(34,48,31,.1);
+    }
+    .download-card .app-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      margin: 0 auto 1.2rem;
+      display: block;
+      box-shadow: 0 6px 20px rgba(34,48,31,.15);
+    }
+    .download-card h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: .5rem;
+    }
+    .download-card p {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      line-height: 1.55;
+    }
+    .dl-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    .dl-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ink);
+      min-width: 0;
+      line-height: 1.35;
+    }
+    .dl-step > span:last-child { min-width: 0; }
+    .dl-step .step-copy { flex: 1; min-width: 0; }
+    .dl-step .sn {
+      background: var(--mango);
+      color: #fff;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .dl-note {
+      background: var(--mango-lt);
+      border: 2px solid #f5d9a0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--mango-dark);
+      text-align: left;
+      margin-top: 1.2rem;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: #a8c3a0;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    footer a { color: #c8f0d9; text-decoration: none; font-weight: 700; }
+    footer a:hover { text-decoration: underline; }
+    .footer-logo {
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: .6rem;
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 600px) {
+      nav {
+        padding: max(0.65rem, env(safe-area-inset-top)) 1rem 0.65rem;
+        min-height: 64px;
+      }
+      .nav-logo {
+        min-width: 0;
+        font-size: 1.25rem;
+      }
+      .nav-logo img { width: 32px; height: 32px; }
+      .nav-links { display: none; }
+      .hero {
+        width: 100%;
+        padding: 2.75rem 1rem 2.5rem;
+      }
+      .hero-badge {
+        width: min(100%, 398px);
+        padding: 8px 12px;
+        margin-bottom: 1.35rem;
+        font-size: 0.86rem;
+      }
+      .hero h1 {
+        width: 100%;
+        font-size: clamp(2.15rem, 11vw, 3rem);
+        line-height: 1.08;
+      }
+      .hero p {
+        max-width: 390px;
+        font-size: 1.05rem;
+        line-height: 1.55;
+      }
+      .hero-buttons { width: 100%; }
+      .hero-buttons a { max-width: 100%; }
+      .section { padding: 3rem 1rem; }
+      .download-section { padding: 3.5rem 1rem; }
+      .download-card { padding: 2rem 1.2rem; }
+      .mod-row { gap: 11px; padding: 16px; }
+      .mod-num { font-size: .7rem; padding: 7px 8px; }
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .float { animation: float 4s ease-in-out infinite; }
+
+    /* scroll-reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-  <h1>NutrialexApp</h1>
-  <p>App educativa para padres y madres. Juega alimentación y movimiento con tu hijo.</p>
-  <p><a href="legal/privacidad.html">Política de privacidad</a></p>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="../app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" alt="NutriApp ícono" />
+    NutriApp
+  </a>
+  <ul class="nav-links">
+    <li><a href="#caracteristicas">Características</a></li>
+    <li><a href="#juegos">Juegos</a></li>
+    <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#descargar" class="nav-cta">⬇ Descargar gratis</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+  <div class="hero-badge">🌱 App educativa gratuita · Niños 6–12 años</div>
+  <h1>Aprende a <span>comer bien</span><br/>jugando con NutriApp</h1>
+  <p>Minijuegos, retos, medallas y el semáforo de la alimentación. Todo lo que un niño necesita para aprender nutrición de forma divertida.</p>
+  <div class="hero-buttons">
+    <a href="#descargar" class="btn-primary">
+      <span>⬇</span> Descargar APK gratis
+    </a>
+    <a href="#juegos" class="btn-secondary">
+      🎮 Ver juegos
+    </a>
+  </div>
+  <div class="hero-feature reveal">
+    <img src="play/assets/feature-graphic.png" alt="Pantallas de NutriApp" />
+  </div>
+</section>
+
+<!-- ════════════════════ STATS ════════════════════ -->
+<div class="stats">
+  <div class="stat-pill reveal">
+    <div class="num">7</div>
+    <div class="lbl">Niveles de aprendizaje</div>
+  </div>
+  <div class="stat-pill reveal">
+    <div class="num">13+</div>
+    <div class="lbl">Actividades y juegos</div>
+  </div>
+  <div class="stat-pill reveal">
+    <div class="num">20</div>
+    <div class="lbl">Alimentos estudiados</div>
+  </div>
+  <div class="stat-pill reveal">
+    <div class="num">7</div>
+    <div class="lbl">Medallas desbloqueables</div>
+  </div>
+  <div class="stat-pill reveal">
+    <div class="num">100%</div>
+    <div class="lbl">Gratis · Sin anuncios</div>
+  </div>
+</div>
+
+<!-- ════════════════════ CARACTERÍSTICAS ════════════════════ -->
+<section class="section" id="caracteristicas">
+  <div class="section-inner">
+    <div class="section-tag">¿Por qué NutriApp?</div>
+    <h2 class="section-title">Todo lo que necesitas para<br/>educar con diversión</h2>
+    <p class="section-sub">Diseñada para escolares colombianos de 6 a 12 años, con base en guías de la OMS y el Ministerio de Salud.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">🎮</div>
+        <h3>Minijuegos interactivos</h3>
+        <p>Verdadero o Falso, Memoria Nutritiva, Ruleta de Alimentos, Drag &amp; Drop y más. Aprender nunca fue tan divertido.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📊</div>
+        <h3>Cálculo de IMC pediátrico</h3>
+        <p>Ingresa peso y estatura del niño y obtén el diagnóstico nutricional basado en tablas de la OMS para su edad.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🏆</div>
+        <h3>Gamificación completa</h3>
+        <p>Puntos, monedas, racha diaria y 7 medallas desbloqueables. El niño siempre quiere seguir aprendiendo.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🔒</div>
+        <h3>100% privado y offline</h3>
+        <p>No requiere Internet. Los datos del niño nunca salen del teléfono. Sin anuncios, sin rastreo.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🌱</div>
+        <h3>Sendero de 7 niveles</h3>
+        <p>Progreso visible como un mapa de aventura. Cada nivel desbloquea nuevas actividades y retos.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🦺</div>
+        <h3>Semáforo saludable</h3>
+        <p>Verde, amarillo y rojo. El niño aprende qué alimentos comer siempre, con moderación o solo de vez en cuando.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ JUEGOS ════════════════════ -->
+<section class="section games-section" id="juegos">
+  <div class="section-inner">
+    <div class="section-tag">Actividades</div>
+    <h2 class="section-title">13 juegos y actividades<br/>educativas</h2>
+    <p class="section-sub">Cada actividad refuerza un concepto diferente con mecánicas variadas para mantener la atención.</p>
+    <div class="games-grid">
+      <div class="game-chip reveal">
+        <span class="gi">✅</span>
+        <span class="gn">Verdadero o Falso<small>16 afirmaciones de nutrición</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">✏️</span>
+        <span class="gn">Completa la frase<small>Rellena el espacio en blanco</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🧠</span>
+        <span class="gn">Memoria Nutritiva<small>Encuentra las 8 parejas</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🎡</span>
+        <span class="gn">Ruleta de Alimentos<small>Gira y responde</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🥦</span>
+        <span class="gn">¿A qué grupo pertenece?<small>Arrastra al grupo correcto</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🍽️</span>
+        <span class="gn">Elige el mejor plato<small>Compara opciones A vs B</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">❓</span>
+        <span class="gn">Cuestionario de Alimentos<small>20 alimentos, 4 opciones</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🔗</span>
+        <span class="gn">Une imagen con beneficio<small>Relaciona actividad y salud</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🚦</span>
+        <span class="gn">Semáforo Saludable<small>Verde, amarillo y rojo</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">⭐</span>
+        <span class="gn">Mi Reto Saludable<small>Checklist diario con estrellas</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🔍</span>
+        <span class="gn">Descubre los Alimentos<small>Tabla visual de 20 alimentos</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🏃</span>
+        <span class="gn">Quiz Actividad Física<small>Módulo 2 — Muévete</small></span>
+      </div>
+      <div class="game-chip reveal">
+        <span class="gi">🏅</span>
+        <span class="gn">¿Cuál hábito es saludable?<small>Dilemas de decisión</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ MÓDULOS ════════════════════ -->
+<section class="section" id="modulos">
+  <div class="section-inner">
+    <div class="section-tag">Contenido</div>
+    <h2 class="section-title">7 misiones para<br/>desbloquear tu poder</h2>
+    <p class="section-sub">Cada misión convierte un nuevo hábito saludable en una aventura. Aprende, supera el reto y desbloquea la siguiente insignia.</p>
+    <div class="modules-list">
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 01</span>
+        <div>
+          <h4>🍎 Conozco los alimentos</h4>
+          <p>Aprende a reconocer los 20 alimentos principales y lo que hacen en el cuerpo.</p>
+        </div>
+      </div>
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 02</span>
+        <div>
+          <h4>🥦 Descubro los nutrientes</h4>
+          <p>Vitaminas, proteínas, calcio, fibra y energía — cada nutriente tiene su super poder.</p>
+        </div>
+      </div>
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 03</span>
+        <div>
+          <h4>🍽️ Armo mi plato saludable</h4>
+          <p>Combina alimentos para construir el plato perfecto. Aprende los grupos alimenticios.</p>
+        </div>
+      </div>
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 04</span>
+        <div>
+          <h4>🏃 Campeón de la actividad física</h4>
+          <p>60 minutos al día, calentar antes de jugar, hidratarse. ¡El movimiento también es salud!</p>
+        </div>
+      </div>
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 05</span>
+        <div>
+          <h4>💧 Cuido mi cuerpo y mi mente</h4>
+          <p>Hidratación, descanso (9–11 horas) y bienestar integral para niños.</p>
+        </div>
+      </div>
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 06</span>
+        <div>
+          <h4>🦷 Elijo hábitos saludables</h4>
+          <p>Lavado de manos, cepillado de dientes, hábitos de higiene para todos los días.</p>
+        </div>
+      </div>
+      <div class="mod-row reveal">
+        <span class="mod-num">Misión 07</span>
+        <div>
+          <h4>🦸 Me convierto en Superhéroe de la Salud</h4>
+          <p>¡El reto final! Suma puntos, desbloquea medallas y compite por los premios.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ GAMIFICACIÓN ════════════════════ -->
+<section class="section gamif-section">
+  <div class="section-inner">
+    <div class="section-tag">Premios</div>
+    <h2 class="section-title">Gana medallas y sé<br/>un Superhéroe de la Salud</h2>
+    <p class="section-sub">Cada respuesta correcta suma puntos. Los 5 mejores puntajes ganan premios reales como kits deportivos y balones.</p>
+    <div class="medals-grid">
+      <div class="medal-chip reveal"><span>🥇</span>Explorador de las Frutas</div>
+      <div class="medal-chip reveal"><span>🥇</span>Rey de las Verduras</div>
+      <div class="medal-chip reveal"><span>🥇</span>Campeón del Agua</div>
+      <div class="medal-chip reveal"><span>🥇</span>Super Deportista</div>
+      <div class="medal-chip reveal"><span>🥇</span>Protector del Corazón</div>
+      <div class="medal-chip reveal"><span>🥇</span>Experto en Alimentación</div>
+      <div class="medal-chip reveal"><span>🥇</span>Guardián de Buenos Hábitos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ DESCARGA ════════════════════ -->
+<section class="section download-section" id="descargar">
+  <div class="download-card reveal">
+    <img class="app-icon" src="../app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" alt="NutriApp ícono" />
+    <h2>Descarga NutriApp gratis</h2>
+    <p>Disponible para Android. Instala el APK directamente en el teléfono en 3 pasos simples.</p>
+
+    <div class="dl-steps">
+      <div class="dl-step">
+        <span class="sn">1</span>
+        <span class="step-copy">Toca el botón de abajo para descargar el archivo APK.</span>
+      </div>
+      <div class="dl-step">
+        <span class="sn">2</span>
+        <span class="step-copy">Abre el archivo desde las notificaciones o la carpeta Descargas.</span>
+      </div>
+      <div class="dl-step">
+        <span class="sn">3</span>
+        <span class="step-copy">Si te pide permiso, activa <strong>"Instalar de fuentes desconocidas"</strong> y confirma.</span>
+      </div>
+    </div>
+
+    <a href="https://github.com/CodiDevs/nutriapp-android/releases/latest/download/NutriApp.apk"
+       class="btn-primary" style="justify-content:center;width:100%;font-size:1.05rem;" id="apk-btn">
+      ⬇ Descargar NutriApp.apk
+    </a>
+
+    <div class="dl-note">
+      ⚠️ Android puede mostrar una advertencia al instalar APKs externos. Es normal — NutriApp es segura, no requiere Internet y no recopila datos personales.
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+  <div class="footer-logo">🌱 NutriApp</div>
+  <p>App educativa para niños colombianos</p>
+  <p style="margin-top:.6rem;">
+    <a href="legal/privacidad.html">Política de privacidad</a>
+  </p>
+  <p style="margin-top:1rem;font-size:.78rem;color:#6a8a62;">
+    NutriApp no es un dispositivo médico. El IMC es solo orientativo. Consulta a un profesional de la salud.
+  </p>
+</footer>
+
+<!-- ════════════════════ SCRIPTS ════════════════════ -->
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // APK button — muestra alerta si el usuario está en desktop
+  document.getElementById('apk-btn').addEventListener('click', function(e) {
+    const isAndroid = /android/i.test(navigator.userAgent);
+    if (!isAndroid) {
+      const ok = confirm('⚠️ Parece que estás en un computador.\n\nEl APK está pensado para instalar en un teléfono Android.\n\n¿Quieres descargarlo de todas formas para pasarlo al teléfono?');
+      if (!ok) e.preventDefault();
+    }
+  });
+</script>
+
 </body>
 </html>
