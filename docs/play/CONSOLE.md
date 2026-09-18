@@ -8,7 +8,7 @@ No marcar Families / Designed for children. El usuario de la ficha es el adulto.
 
 1. Activar GitHub Pages: repo → Settings → Pages → Deploy from branch `main` → folder `/docs`.
 2. URL de privacidad:
-   `https://codidevs.github.io/nutriapp-android/legal/privacidad.html`
+   `https://codidevs.github.io/nutrialexapp-android/legal/privacidad.html`
 3. Generar upload key (no commitear el `.jks`):
 
 ```

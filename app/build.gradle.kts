@@ -28,7 +28,7 @@ android {
         buildConfigField(
             "String",
             "PRIVACY_URL",
-            "\"https://codidevs.github.io/nutriapp-android/legal/privacidad.html\""
+            "\"https://codidevs.github.io/nutrialexapp-android/legal/privacidad.html\""
         )
     }
 
