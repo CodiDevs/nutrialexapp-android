@@ -342,15 +342,15 @@
     .stat-lbl { font-size: .78rem; font-weight: 700; color: var(--ink-soft); }
     .dl-note { margin-top: 1.1rem; font-size: .84rem; color: var(--ink-soft); }
 
-    /* QR de descarga directa */
+    /* QR de descarga directa — solo escritorio: en el teléfono no aporta */
     .qr-block {
-      display: flex; align-items: center; gap: 18px; text-align: left;
-      margin-top: 1.5rem; padding: 16px;
+      display: flex; align-items: center; gap: 16px; text-align: left;
+      max-width: 26rem; margin-top: 1.6rem; padding: 14px 16px;
       background: var(--bg); border-radius: var(--r-md); box-shadow: var(--sink);
     }
-    .qr-block img { width: 136px; height: 136px; flex: none; background: #fff; border-radius: var(--r-sm); padding: 8px; }
-    .qr-block p { font-size: .89rem; color: var(--ink-soft); }
-    .qr-block strong { display: block; color: var(--ink); font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: .98rem; margin-bottom: 2px; }
+    .qr-block img { width: 112px; height: 112px; flex: none; background: #fff; border-radius: var(--r-sm); padding: 7px; }
+    .qr-block p { font-size: .88rem; color: var(--ink-soft); }
+    .qr-block strong { display: block; color: var(--ink); font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: .97rem; margin-bottom: 2px; }
 
     /* ═══ Footer ═══ */
     .site-footer { border-top: 1px solid var(--line); padding: 3rem 0 2.5rem; }
@@ -375,6 +375,7 @@
       .phones::before { width: 340px; height: 340px; }
       .phone-main { width: 208px; }
       .phone-side { width: 134px; }
+      .qr-block { display: none; }
     }
     @media (max-width: 940px) {
       .site-nav { display: none; }
@@ -391,7 +392,6 @@
       .level:nth-child(even) { flex-direction: row; }
       .faq-q h3 { font-size: .98rem; }
       .shot { width: 180px; }
-      .qr-block { flex-direction: column; text-align: center; gap: 14px; }
     }
 
     /* ═══ Movimiento reducido ═══ */
@@ -465,6 +465,10 @@
             Ver cómo es
             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
           </a>
+        </div>
+        <div class="qr-block">
+          <img src="assets/descarga-qr.svg" alt="Código QR que abre la descarga del APK en un teléfono" width="112" height="112" />
+          <p><strong>¿Estás en un computador?</strong> Escanéalo con la cámara del teléfono y la descarga empieza ahí mismo.</p>
         </div>
         <ul class="hero-guarantees">
           <li class="guarantee"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg> Sin anuncios</li>
@@ -878,12 +882,7 @@
           <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>
           Descargar NutrialexApp.apk
         </a>
-        <p class="dl-note">El archivo se descarga de GitHub Releases del proyecto CodiDevs.</p>
-
-        <div class="qr-block">
-          <img src="assets/descarga-qr.svg" alt="Código QR que abre la descarga del APK en el teléfono" width="136" height="136" loading="lazy" />
-          <p><strong>¿Estás en un computador?</strong> Apunta la cámara de tu teléfono a este código y la descarga empieza ahí mismo, sin pasar el archivo a mano.</p>
-        </div>
+        <p class="dl-note">El archivo se descarga de GitHub Releases del proyecto CodiDevs. Si estás en un computador, escanea el código QR del inicio y la descarga empieza directo en tu teléfono.</p>
       </div>
     </div>
   </section>
